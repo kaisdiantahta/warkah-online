@@ -21,11 +21,11 @@
   </style>
   <link rel="stylesheet" href="{{ asset('admin-lte/dist/css/adminlte.min.css') }}">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="font-size:0.8">
+<body class="hold-transition sidebar-mini layout-fixed" style="font-size:0.9rem">
 <div class="wrapper">
 
-  {{-- @include('admin.topbar') --}}
-  {{-- @include('admin.sidebar') --}}
+  @include('layouts.topbar')
+  @include('layouts.sidebar')
   
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

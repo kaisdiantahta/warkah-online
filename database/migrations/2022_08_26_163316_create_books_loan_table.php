@@ -13,11 +13,10 @@ class CreateBooksLoanTable extends Migration
      */
     public function up()
     {
-        Schema::create('books_loan', function (Blueprint $table) {
+        Schema::create('log_peminjaman', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('book_id');
-            $table->string('peminjam')->nullable();
-            $table->string('no_identitas')->nullable();
+            $table->bigInteger('peminjam');
             $table->datetime('tanggal_pinjam')->nullable();
             $table->datetime('batas_pengembalian')->nullable();
             $table->datetime('tanggal_kembali')->nullable();

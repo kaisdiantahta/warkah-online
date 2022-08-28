@@ -80,4 +80,15 @@ class BookController extends Controller
         Book::where('id', $id)->delete();
         return redirect()->back()->with('message', '<div class="alert alert-success my-3">Data buku berhasil dihapus.</div>');
     }
+
+    public function jsonAll(Request $request)
+    {
+        if ($request->has('q')) {
+            $data = Book::where('stok', '>', 0)->where('judul', 'like', '%'.$request->q.'%')->limit(10)->get();
+        } else {
+            $data = Book::where('stok', '>', 0)->limit(10)->get();
+        }
+
+        return response()->json($data);
+    }
 }
