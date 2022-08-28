@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Daftar Buku</h1>
+          <h1 class="m-0 text-dark">Kategori Buku</h1>
         </div><!-- /.col -->
         <div class="col-sm-6 small-9">
           {{-- <ol class="breadcrumb float-sm-right">
@@ -29,7 +29,7 @@
             <div class="card-body">
               <div class="row my-3">
                 <div class="col-md-12">
-                  <a href="{{ route('book.create') }}" class="btn btn-sm btn-primary text-white"><i class="fas fa-plus"></i> Tambah</a>
+                  <a href="{{ route('category.create') }}" class="btn btn-sm btn-primary text-white"><i class="fas fa-plus"></i> Tambah</a>
                 </div>
               </div>
               <div class="row">
@@ -38,31 +38,19 @@
                     <thead>
                       <tr>
                         <th></th>
-                        <th>Judul Buku</th>
                         <th>Kategori</th>
-                        <th>Pengarang</th>
-                        <th>Penerbit</th>
-                        <th>Tahun Terbit</th>
-                        <th>Stok</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($books as $book)
+                      @foreach ($categories as $category)
                           <tr class="align-middle">
                             <td class="text-center col-2">
                               <div class="btn-group transparent">
-                                <a data-method="delete" data-confirm="Anda yakin ingin menghapus data ini?" href="{{ route('book.delete', $book->id) }}"class="btn btn-sm btn-primary custom-hover" title="Hapus"><i class="fas fa-fw fa-trash"></i></a>
-                                <a href="{{ route('book.edit', $book->id) }}" class="btn btn-sm btn-primary custom-hover" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
-                                <a href="{{ route('book.show', $book->id) }}" class="btn btn-sm btn-primary custom-hover" title="Detail"><i class="fas fa-fw fa-eye"></i></a>
-
+                                <a data-method="delete" data-confirm="Anda yakin ingin menghapus data ini?" href="{{ route('category.delete', $category->id) }}"class="btn btn-sm btn-primary custom-hover" title="Hapus"><i class="fas fa-fw fa-trash"></i></a>
+                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-primary custom-hover" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
                               </div>
                             </td>
-                            <td>{{ $book->judul }}</td>
-                            <td>{{ $book->category->name ?? '-' }}</td>
-                            <td>{{ $book->pengarang }}</td>
-                            <td>{{ $book->penerbit }}</td>
-                            <td>{{ $book->tahun_terbit }}</td>
-                            <td>{{ $book->stok }}</td>
+                            <td>{{ $category->name }}</td>
                           </tr>
                       @endforeach
                     </tbody>

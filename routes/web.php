@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\PeminjamanController;
 
 /*
@@ -29,6 +30,17 @@ Route::group(['as' => 'book.', 'prefix' => 'book/'], function() {
     Route::delete('{id}/delete', [BookController::class, 'delete'])->name('delete');
 
     Route::get('json-all', [BookController::class, 'jsonAll'])->name('json-all');
+});
+
+Route::group(['as' => 'category.', 'prefix'=>'category/'], function() {
+    Route::get('', [BookCategoryController::class, 'index'])->name('index');
+    Route::get('create', [BookCategoryController::class, 'create'])->name('create');
+    Route::post('store', [BookCategoryController::class, 'store'])->name('store');
+    Route::get('{id}/edit', [BookCategoryController::class, 'edit'])->name('edit');
+    Route::put('{id}/update', [BookCategoryController::class, 'update'])->name('update');
+    Route::delete('{id}/delete', [BookCategoryController::class, 'delete'])->name('delete');
+
+    Route::get('json-all', [BookCategoryController::class, 'jsonAll'])->name('json-all');
 });
 
 Route::group(['as' => 'peminjaman.', 'prefix' => 'peminjaman/'], function() {

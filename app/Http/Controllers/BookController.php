@@ -9,7 +9,7 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        $books = Book::get();
+        $books = Book::with('category')->latest()->get();
 
         return view('book.index', compact('books'));
     }
@@ -28,6 +28,7 @@ class BookController extends Controller
         try {
             Book::create([
                 'judul' => $request->judul,
+                'book_category_id' => $request->category,
                 'pengarang' => $request->pengarang,
                 'penerbit' => $request->penerbit,
                 'tahun_terbit' => $request->tahun_terbit,
@@ -62,6 +63,7 @@ class BookController extends Controller
         try {
             Book::where('id', $id)->update([
                 'judul' => $request->judul,
+                'book_category_id' => $request->category,
                 'pengarang' => $request->pengarang,
                 'penerbit' => $request->penerbit,
                 'tahun_terbit' => $request->tahun_terbit,
@@ -77,7 +79,13 @@ class BookController extends Controller
 
     public function delete($id)
     {
-        Book::where('id', $id)->delete();
+        $book = Book::where('id', $id)->withCount('peminjaman')->first();
+        // dd($book);
+        if ($book->peminjaman_count > 0) {
+            return redirect()->back()->with('message', '<div class="alert alert-danger my-3">Data buku tidak bisa dihapus, karena terkait dengan berbagai data peminjaman.</div>');
+        }
+        $book->delete();
+
         return redirect()->back()->with('message', '<div class="alert alert-success my-3">Data buku berhasil dihapus.</div>');
     }
 

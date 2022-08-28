@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\LogPeminjaman as Peminjaman;
 use App\Models\Peminjam;
 use App\Models\Book;
+use App\Constants\StatusPeminjaman;
 use Carbon\Carbon;
 
 class PeminjamanController extends Controller
@@ -18,7 +19,7 @@ class PeminjamanController extends Controller
                         $log->with('book');
                     }
                 ])
-                ->orderBy('created_at', 'desc')
+                ->latest()
                 ->get();
         // dd($data);
         return view('peminjaman.index', compact('data'));
@@ -66,16 +67,16 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('message', '<div class="alert alert-success my-3">Data peminjaman berhasil ditambahkan.</div>');
     }
 
-    public function show($id)
+    public function detailPeminjaman($id)
     {
-        $peminjaman = Peminjam::where('id', $id)
+        $data = Peminjam::where('id', $id)
                     ->with([
                         'pinjam' => function($log) {
                             $log->with('book');
                         }
                     ])
                     ->first();
-        return view('peminjaman.detail-peminjaman', compact('peminjaman'));
+        return view('peminjaman.detail-peminjaman', compact('data'));
     }
 
     public function pengembalian($id)
@@ -83,7 +84,7 @@ class PeminjamanController extends Controller
         $data = Peminjam::where('id', $id)
                     ->with([
                         'pinjam' => function($log) {
-                            $log->with('book');
+                            $log->where('status', StatusPeminjaman::PEMINJAMAN)->with('book');
                         }
                     ])
                     ->first();
@@ -104,20 +105,31 @@ class PeminjamanController extends Controller
                     $denda[$book_id] = 1000*$terlambat;
                 }
             }
-
             foreach ($peminjaman as $key => $val) {
-                Peminjaman::where('id', $val->id)
-                        ->update([
-                            'tanggal_kembali' => in_array($val->book_id, $request->books ?? []) ? now() : null,
-                            'denda' => $denda[$val->book_id] ?? 0
-                        ]);
+                if (in_array($val->book_id, $request->books ?? [])) {
+                    Peminjaman::where('id', $val->id)
+                            ->update([
+                                'tanggal_kembali' => now(),
+                                'denda' => $denda[$val->book_id] ?? 0,
+                                'status' => StatusPeminjaman::SELESAI,
+                            ]);
 
-                // update stok
-                $book = Book::where('id', $val->book_id)->first();
-                $book->update([
-                    'stok' => $book->stok + 1
-                ]);
+                    // update stok
+                    $book = Book::where('id', $val->book_id)->first();
+                    $book->update([
+                        'stok' => $book->stok + 1
+                    ]);
+                }
             }
+
+            // update status peminjam jika sudah mengembalikan semua buku
+            $peminjaman = Peminjaman::where('peminjam', $peminjamId)
+                                    ->where('status', StatusPeminjaman::PEMINJAMAN)
+                                    ->get();
+            if ($peminjaman->count() == 0) {
+                Peminjam::where('id', $peminjamId)->update(['status' => StatusPeminjaman::SELESAI]);
+            }
+
 
         } catch (\Exception $e) {
             return redirect()->back()->with('message', '<div class="alert alert-danger my-3">'.$e->getMessage().'</div>');  

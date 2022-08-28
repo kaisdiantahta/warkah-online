@@ -4,6 +4,7 @@
 
 @php
   use Carbon\Carbon;
+  use App\Constants\StatusPeminjaman;
 @endphp
 @section('content')
 <div class="content-header">
@@ -46,15 +47,18 @@
                         <th>Batas Pengembalian</th>
                         <th>Tanggal Kembali</th>
                         <th>Total Denda</th>
+                        <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach ($data as $val)
                           <tr class="align-middle">
-                            <td class="text-center col-2">
+                            <td>
                               <div class="btn-group transparent">
                                 <a href="{{ route('peminjaman.detail-peminjaman', $val->id) }}" class="btn btn-sm btn-primary custom-hover" title="Detail"><i class="fas fa-fw fa-eye"></i></a>
-                                <a href="{{ route('peminjaman.pengembalian', $val->id) }}" class="btn btn-sm btn-primary custom-hover" title="Form Pengembalian"><i class="fas fa-fw fa-check"></i></a>
+                                @if ($val->status == StatusPeminjaman::PEMINJAMAN)
+                                  <a href="{{ route('peminjaman.pengembalian', $val->id) }}" class="btn btn-sm btn-primary custom-hover" title="Form Pengembalian"><i class="fas fa-fw fa-check"></i></a>
+                                @endif
                               </div>
                             </td>
                             <td>{{ $val->nama_peminjam }}</td>
@@ -67,7 +71,7 @@
                             </td>
                             <td>{{ Carbon::parse($val->pinjam[0]->tanggal_pinjam)->translatedFormat('d M Y') }}</td>
                             <td>{{ Carbon::parse($val->pinjam[0]->batas_pengembalian)->translatedFormat('d M Y') }}</td>
-                            <td>{{ Carbon::parse($val->pinjam[0]->tanggal_kembali)->translatedFormat('d M Y') }}</td>
+                            <td>{{ !is_null($val->pinjam[0]->tanggal_kembali) ? Carbon::parse($val->pinjam[0]->tanggal_kembali)->translatedFormat('d M Y') : '-'}}</td>
                             <td>
                               @php
                                 $denda = 0;
@@ -76,6 +80,9 @@
                                 }
                               @endphp
                               Rp {{ number_format($denda ?? 0, 0, ',', '.') }}
+                            </td>
+                            <td>
+                              {!! StatusPeminjaman::html($pinjam->status) !!}
                             </td>
                           </tr>
                       @endforeach

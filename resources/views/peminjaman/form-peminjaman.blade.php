@@ -71,7 +71,7 @@
                         @enderror
                     </div>
                     <div class="form-group row justify-content-end">
-                        <button class="btn btn-secondary float-right px-4 m-1">Batal</button>
+                        <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary float-right px-4 m-1">Batal</a>
                         <button class="btn btn-primary float-right px-4 m-1">Simpan</button>
                     </div>
 

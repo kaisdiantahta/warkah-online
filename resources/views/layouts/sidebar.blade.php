@@ -24,6 +24,12 @@
               <i class="far fa-circle nav-icon"></i>
               <p>Daftar Buku</p>
             </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('category.index') }}" class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Kategori Buku</p>
+            </a>
           </li>{{-- 
           <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}"

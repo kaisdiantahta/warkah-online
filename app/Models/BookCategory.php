@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Peminjam extends Model
+class BookCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'peminjam';
+    protected $table = 'book_categories';
 
     protected $fillable = [
-        'nama_peminjam',
-        'no_identitas'
+        'name',
     ];
 
-    public function pinjam()
+    public function books()
     {
-        return $this->hasMany(LogPeminjaman::class, 'peminjam');
+        return $this->hasMany(Book::class, 'book_category_id');
     }
 }

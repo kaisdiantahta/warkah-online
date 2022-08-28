@@ -116,7 +116,7 @@
                     </table>
                     <h5 class="font-weight-bold">Total Denda : Rp {{ number_format($total ?? 0, 0, ',', '.') }}</h5>
                     <div class="form-group row justify-content-end">
-                        <button class="btn btn-secondary float-right px-4 m-1">Batal</button>
+                        <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary float-right px-4 m-1">Batal</a>
                         <button class="btn btn-primary float-right px-4 m-1">Simpan</button>
                     </div>
 
