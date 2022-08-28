@@ -15,22 +15,22 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
             <a href="{{ route('peminjaman.index') }}" class="nav-link {{ request()->routeIs('peminjaman.*') ? 'active' : '' }}">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="fa fa-fw fa-desktop nav-icon"></i>
               <p>Peminjaman Buku</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('book.index') }}" class="nav-link {{ request()->routeIs('book.*') ? 'active' : '' }}">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="fa fa-fw fa-book nav-icon"></i>
               <p>Daftar Buku</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('category.index') }}" class="nav-link {{ request()->routeIs('category.*') ? 'active' : '' }}">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="fa fa-fw fa-cog nav-icon"></i>
               <p>Kategori Buku</p>
             </a>
-          </li>{{-- 
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}"
                onclick="event.preventDefault();
@@ -41,7 +41,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
-          </li> --}}
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

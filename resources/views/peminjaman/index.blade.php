@@ -14,10 +14,6 @@
           <h1 class="m-0 text-dark">Log Peminjaman Buku</h1>
         </div><!-- /.col -->
         <div class="col-sm-6 small-9">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Dashboard Peminjaman</a></li>
-            <li class="breadcrumb-item active">index</li>
-          </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
 
@@ -116,6 +112,7 @@
       $("#example1").DataTable({
         "responsive": true,
         "autoWidth": false,
+        "order": [[ 7, 'asc' ]]
       });
     });
   </script>
