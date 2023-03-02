@@ -11,7 +11,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Log Peminjaman Buku</h1>
+          <h1 class="m-0 text-dark">Log Pelaporan Dokumen</h1>
         </div><!-- /.col -->
         <div class="col-sm-6 small-9">
         </div><!-- /.col -->

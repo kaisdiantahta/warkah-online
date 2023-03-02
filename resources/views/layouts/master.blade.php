@@ -34,7 +34,7 @@
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2022 Sistem Perpustakaan</strong>
+    <strong>Copyright &copy; 2022 Warkah</strong>
   </footer>
 
 </div>

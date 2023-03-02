@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookCategoryController;
+use App\Http\Controllers\WarkahController;
 use App\Http\Controllers\PeminjamanController;
 
 /*
@@ -17,7 +18,7 @@ use App\Http\Controllers\PeminjamanController;
 */
 
 Route::get('/', function() {
-    return redirect()->route('peminjaman.index');
+    return redirect()->route('warkah.index');
 });
 
 Route::group(['middleware' => 'auth'], function() {
@@ -32,7 +33,20 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('json-all', [BookController::class, 'jsonAll'])->name('json-all');
     });
+    Route::group(['as' => 'warkah.', 'prefix' => 'warkah/'], function() {
+        Route::get('create', [WarkahController::class, 'create'])->name('create');
+        Route::post('store', [WarkahController::class, 'store'])->name('store');
+        Route::get('show', [WarkahController::class, 'show'])->name('show');
+        Route::post('search', [WarkahController::class, 'search'])->name('search');
+        Route::get('index', [WarkahController::class, 'index'])->name('index');
 
+        Route::get('{id}/edit', [WarkahController::class, 'edit'])->name('edit');
+        Route::get('{id}/detail', [WarkahController::class, 'detail'])->name('detail');
+        Route::put('{id}/add_komentar', [WarkahController::class, 'add_komentar'])->name('add_komentar');
+
+        Route::put('{id}/update', [WarkahController::class, 'update'])->name('update');
+        Route::delete('{id}/delete', [WarkahController::class, 'delete'])->name('delete');
+    });
     Route::group(['as' => 'category.', 'prefix'=>'category/'], function() {
         Route::get('', [BookCategoryController::class, 'index'])->name('index');
         Route::get('create', [BookCategoryController::class, 'create'])->name('create');
